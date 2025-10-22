@@ -1,50 +1,111 @@
 # coding-project-template
 
-Car Dealership Application
-This is an IBM full stack software developer capstone project. This is a website of a fake national car dealership that allows new and existing customers to look up different branches by state and look at customer reviews of the various branches. Customers should be able to create an account and add their review for any of the branches.
+# 🚗 Car Dealership Application
 
-Project Overview
-Cloned the repository and added static pages
-Forked the GitHub repo containing the project template. The main web application is a predefined Django application.
-Cloned the repository in the Cloud IDE environment.
-Created static pages to finish the user stories.
-Ran the application locally.
-Implemented user management using the Django user authentication system and created a REACT frontend.
-Implemented backend services.
-Created Node.js server to manage dealers and reviews using MongoDB and dockerize it.
-Deployed sentiment analyzer (a microservice which leverages the IBM Watson AI libraries to analyze customer sentiment from customer reviews) on Code Engine.
-Created Django models and views to manage car model and car make.
-Created Django proxy services and views to integrate dealers and reviews together.
-Added dynamic pages with Django templates.
-Created a page that displays all the dealers.
-Created a page that displays reviews for a selected dealer.
-Created a page that lets the end user add a review for a selected dealer.
-Implemented CI/CD, and then ran and tested the application
-Set up continuous integration and delivery for code linting.
-Ran the application on Cloud IDE.
-Tested the updated application locally.
-Deployed the application on Kubernetes.
-Solution architecture
-The solution will consist of multiple technologies :
+This project is part of the **IBM Full Stack Software Developer Capstone**.  
+It represents a fictional national car dealership website where customers can browse branches by state, read reviews, and post their own reviews after signing up.
 
-The user interacts with the "Dealerships Website", a Django website, through a web browser.
+---
 
-The Django application provides the following microservices for the end user:
+## 🧩 Project Overview
 
-get_cars/ - To get the list of cars from
-get_dealers/ - To get the list of dealers
-get_dealers/:state - To get dealers by state
-dealer/:id - To get dealer by id
-review/dealer/:id - To get reviews specific to a dealer
-add_review/ - To post review about a dealer
-The Django application uses SQLite database to store the Car Make and the Car Model data.
-The "Dealerships and Reviews Service" is an Express Mongo service running in a Docker container. It provides the following services:
-/fetchDealers - To fetch the dealers
-/fetchDealer/:id - To fetch the dealer by id
-fetchReviews - To fetch all the reviews
-fetchReview/dealer/:id - To fetch reviews for a dealer by id
-/insertReview - To insert a review
-"Dealerships Website" interacts with the "Dealership and Reviews Service" through the "Django Proxy Service" contained within the Django Application.
-The "Sentiment Analyzer Service" is deployed on IBM Cloud Code Engine, it provides the following service:
-/analyze/:text - To analyze the sentiment of the text passed. It returns positive, negative or neutral.
-The "Dealerships Website" consumes the "Sentiment Analyzer Service" to analyze the sentiments of the reviews through the Django Proxy contained within the Django application.
+### Steps accomplished
+- Forked and cloned the provided GitHub repository containing the project template.  
+- Set up the predefined **Django** backend application.  
+- Created static pages to fulfill initial user stories.  
+- Ran the application locally in the IBM Cloud IDE environment.  
+- Implemented user management using the **Django authentication system** and created a **React** frontend.  
+- Developed backend services:  
+  - Created a **Node.js server** using **MongoDB** to manage dealers and reviews.  
+  - Dockerized the backend for portability.  
+- Deployed a **Sentiment Analyzer microservice** (using IBM Watson AI) on **IBM Code Engine** to analyze customer review sentiment.  
+- Added **Django models and views** for `CarMake` and `CarModel`.  
+- Integrated the dealership and reviews microservices through **Django proxy views**.  
+- Built **dynamic pages** using Django templates:  
+  - Page displaying all dealers  
+  - Page displaying reviews for a specific dealer  
+  - Page allowing authenticated users to add reviews  
+- Implemented **CI/CD** for automated linting and testing.  
+- Deployed the entire application on **Kubernetes**.  
+
+---
+
+## 🧱 Solution Architecture
+
+The solution uses multiple technologies and microservices working together:
+
+### 1. Django Application ("Dealerships Website")
+- Serves as the main user interface.
+- Provides proxy microservices for the end user:
+
+| Endpoint | Description |
+|-----------|--------------|
+| `/get_cars/` | Retrieve the list of cars |
+| `/get_dealers/` | Retrieve all dealers |
+| `/get_dealers/:state` | Retrieve dealers filtered by state |
+| `/dealer/:id` | Retrieve dealer details by ID |
+| `/review/dealer/:id` | Retrieve reviews for a specific dealer |
+| `/add_review/` | Submit a new review |
+
+**Database:** SQLite (stores `CarMake` and `CarModel` data)
+
+---
+
+### 2. Dealerships and Reviews Service (Node.js + MongoDB)
+This microservice runs in a **Docker container** and manages dealerships and customer reviews.
+
+| Endpoint | Description |
+|-----------|--------------|
+| `/fetchDealers` | Fetch all dealers |
+| `/fetchDealer/:id` | Fetch a dealer by ID |
+| `/fetchReviews` | Fetch all reviews |
+| `/fetchReview/dealer/:id` | Fetch reviews for a dealer by ID |
+| `/insertReview` | Insert a new review |
+
+The Django app communicates with this service through HTTP requests (via proxy functions).
+
+---
+
+### 3. Sentiment Analyzer Service (IBM Code Engine)
+A microservice leveraging **IBM Watson Natural Language Understanding** to analyze the sentiment of reviews.
+
+| Endpoint | Description |
+|-----------|--------------|
+| `/analyze/:text` | Returns the sentiment (`positive`, `negative`, or `neutral`) for the given text |
+
+---
+
+### 4. System Integration
+
+1. **User** interacts with the Django-based frontend via the web browser.  
+2. Django proxies API calls to:
+   - The **Node.js Mongo service** for dealer and review data.  
+   - The **Watson Sentiment Analyzer** for sentiment classification.  
+3. Django renders dynamic pages combining data from all sources.  
+
+---
+
+## ⚙️ Tech Stack Summary
+
+| Layer | Technology |
+|-------|-------------|
+| Frontend | React.js, HTML, CSS |
+| Backend | Django (Python) |
+| Microservices | Node.js + Express |
+| Database | MongoDB & SQLite |
+| Deployment | Docker, Kubernetes, IBM Code Engine |
+| AI Integration | IBM Watson NLU |
+| CI/CD | GitHub Actions / IBM Cloud toolchain |
+
+---
+
+## 🧠 Key Features
+
+- User authentication (login/register/logout)
+- Dealer listings with filtering by state
+- Dealer detail pages with reviews
+- Authenticated users can post new reviews
+- Sentiment analysis integrated with reviews
+- Full microservice-based architecture
+
+---
